@@ -3,7 +3,9 @@ Simple Diablo 2 run counter to keep track of drops
 
 ![jakmd2counter](https://user-images.githubusercontent.com/79934982/161165180-541cc5bc-2443-4b7f-8c27-1da9178a20c5.JPG)
 
+# Installation
 
+Go to the releases section to find the latest EXE
 
 # Drag/Drop Overlay
 
