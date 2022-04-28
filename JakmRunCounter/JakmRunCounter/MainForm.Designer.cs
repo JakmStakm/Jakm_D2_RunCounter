@@ -1,7 +1,7 @@
 ﻿
 namespace JakmRunCounter
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace JakmRunCounter
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btn_NewRun = new System.Windows.Forms.Button();
             this.btn_Stop = new System.Windows.Forms.Button();
             this.btn_Found_Item = new System.Windows.Forms.Button();
@@ -53,6 +53,20 @@ namespace JakmRunCounter
             this.btn_WidthUp = new System.Windows.Forms.Button();
             this.btn_HeightUp = new System.Windows.Forms.Button();
             this.lblHeight = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxProfile = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnItems = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lstGrail = new System.Windows.Forms.ListBox();
+            this.txtGrailSearch = new System.Windows.Forms.TextBox();
+            this.chkFound = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chkNotFound = new System.Windows.Forms.CheckBox();
+            this.cbxItemCatagory = new System.Windows.Forms.ComboBox();
+            this.btnGrailOnly = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_NewRun
@@ -60,7 +74,7 @@ namespace JakmRunCounter
             this.btn_NewRun.BackColor = System.Drawing.Color.Black;
             this.btn_NewRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_NewRun.ForeColor = System.Drawing.Color.Yellow;
-            this.btn_NewRun.Location = new System.Drawing.Point(12, 45);
+            this.btn_NewRun.Location = new System.Drawing.Point(12, 59);
             this.btn_NewRun.Name = "btn_NewRun";
             this.btn_NewRun.Size = new System.Drawing.Size(75, 23);
             this.btn_NewRun.TabIndex = 0;
@@ -74,7 +88,7 @@ namespace JakmRunCounter
             this.btn_Stop.Enabled = false;
             this.btn_Stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Stop.ForeColor = System.Drawing.Color.Yellow;
-            this.btn_Stop.Location = new System.Drawing.Point(93, 45);
+            this.btn_Stop.Location = new System.Drawing.Point(93, 59);
             this.btn_Stop.Name = "btn_Stop";
             this.btn_Stop.Size = new System.Drawing.Size(75, 23);
             this.btn_Stop.TabIndex = 1;
@@ -88,7 +102,7 @@ namespace JakmRunCounter
             this.btn_Found_Item.Enabled = false;
             this.btn_Found_Item.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Found_Item.ForeColor = System.Drawing.Color.Yellow;
-            this.btn_Found_Item.Location = new System.Drawing.Point(174, 45);
+            this.btn_Found_Item.Location = new System.Drawing.Point(174, 59);
             this.btn_Found_Item.Name = "btn_Found_Item";
             this.btn_Found_Item.Size = new System.Drawing.Size(75, 23);
             this.btn_Found_Item.TabIndex = 2;
@@ -192,7 +206,7 @@ namespace JakmRunCounter
             this.lblRunNumberText.AutoSize = true;
             this.lblRunNumberText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRunNumberText.ForeColor = System.Drawing.Color.Yellow;
-            this.lblRunNumberText.Location = new System.Drawing.Point(12, 9);
+            this.lblRunNumberText.Location = new System.Drawing.Point(9, 15);
             this.lblRunNumberText.Name = "lblRunNumberText";
             this.lblRunNumberText.Size = new System.Drawing.Size(46, 13);
             this.lblRunNumberText.TabIndex = 12;
@@ -202,7 +216,7 @@ namespace JakmRunCounter
             // 
             this.lbl_RunNumber.AutoSize = true;
             this.lbl_RunNumber.ForeColor = System.Drawing.Color.White;
-            this.lbl_RunNumber.Location = new System.Drawing.Point(64, 9);
+            this.lbl_RunNumber.Location = new System.Drawing.Point(61, 15);
             this.lbl_RunNumber.Name = "lbl_RunNumber";
             this.lbl_RunNumber.Size = new System.Drawing.Size(13, 13);
             this.lbl_RunNumber.TabIndex = 13;
@@ -310,12 +324,181 @@ namespace JakmRunCounter
             this.lblHeight.Text = "Height";
             this.lblHeight.Visible = false;
             // 
-            // Form1
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Yellow;
+            this.label1.Location = new System.Drawing.Point(30, 561);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Current Profile:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Yellow;
+            this.label2.Location = new System.Drawing.Point(94, 582);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 13);
+            this.label2.TabIndex = 23;
+            // 
+            // cbxProfile
+            // 
+            this.cbxProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxProfile.FormattingEnabled = true;
+            this.cbxProfile.Location = new System.Drawing.Point(12, 579);
+            this.cbxProfile.Name = "cbxProfile";
+            this.cbxProfile.Size = new System.Drawing.Size(143, 21);
+            this.cbxProfile.TabIndex = 25;
+            this.cbxProfile.SelectedIndexChanged += new System.EventHandler(this.cbxProfile_SelectedIndexChanged);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Black;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Yellow;
+            this.button1.Location = new System.Drawing.Point(161, 577);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "New Profile";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnItems
+            // 
+            this.btnItems.BackColor = System.Drawing.Color.Black;
+            this.btnItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnItems.ForeColor = System.Drawing.Color.Yellow;
+            this.btnItems.Location = new System.Drawing.Point(174, 12);
+            this.btnItems.Name = "btnItems";
+            this.btnItems.Size = new System.Drawing.Size(77, 40);
+            this.btnItems.TabIndex = 28;
+            this.btnItems.Text = "Items ->";
+            this.btnItems.UseVisualStyleBackColor = false;
+            this.btnItems.Click += new System.EventHandler(this.btnItems_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(228, 397);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "border";
+            this.label3.Visible = false;
+            // 
+            // lstGrail
+            // 
+            this.lstGrail.FormattingEnabled = true;
+            this.lstGrail.Location = new System.Drawing.Point(281, 163);
+            this.lstGrail.Name = "lstGrail";
+            this.lstGrail.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lstGrail.Size = new System.Drawing.Size(288, 420);
+            this.lstGrail.TabIndex = 30;
+            // 
+            // txtGrailSearch
+            // 
+            this.txtGrailSearch.Location = new System.Drawing.Point(343, 62);
+            this.txtGrailSearch.Name = "txtGrailSearch";
+            this.txtGrailSearch.Size = new System.Drawing.Size(167, 20);
+            this.txtGrailSearch.TabIndex = 32;
+            this.txtGrailSearch.TextChanged += new System.EventHandler(this.txtGrailSearch_TextChanged);
+            // 
+            // chkFound
+            // 
+            this.chkFound.AutoSize = true;
+            this.chkFound.ForeColor = System.Drawing.Color.Yellow;
+            this.chkFound.Location = new System.Drawing.Point(281, 127);
+            this.chkFound.Name = "chkFound";
+            this.chkFound.Size = new System.Drawing.Size(56, 17);
+            this.chkFound.TabIndex = 33;
+            this.chkFound.Text = "Found";
+            this.chkFound.UseVisualStyleBackColor = true;
+            this.chkFound.CheckedChanged += new System.EventHandler(this.chkFound_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Yellow;
+            this.label4.Location = new System.Drawing.Point(405, 39);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(51, 13);
+            this.label4.TabIndex = 34;
+            this.label4.Text = "Search:";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // chkNotFound
+            // 
+            this.chkNotFound.AutoSize = true;
+            this.chkNotFound.ForeColor = System.Drawing.Color.Yellow;
+            this.chkNotFound.Location = new System.Drawing.Point(380, 127);
+            this.chkNotFound.Name = "chkNotFound";
+            this.chkNotFound.Size = new System.Drawing.Size(76, 17);
+            this.chkNotFound.TabIndex = 35;
+            this.chkNotFound.Text = "Not Found";
+            this.chkNotFound.UseVisualStyleBackColor = true;
+            this.chkNotFound.CheckedChanged += new System.EventHandler(this.chkNotFound_CheckedChanged);
+            // 
+            // cbxItemCatagory
+            // 
+            this.cbxItemCatagory.FormattingEnabled = true;
+            this.cbxItemCatagory.Location = new System.Drawing.Point(490, 125);
+            this.cbxItemCatagory.Name = "cbxItemCatagory";
+            this.cbxItemCatagory.Size = new System.Drawing.Size(79, 21);
+            this.cbxItemCatagory.TabIndex = 36;
+            this.cbxItemCatagory.Text = "Catagory";
+            this.cbxItemCatagory.SelectedIndexChanged += new System.EventHandler(this.cbxItemCatagory_SelectedIndexChanged);
+            // 
+            // btnGrailOnly
+            // 
+            this.btnGrailOnly.BackColor = System.Drawing.Color.Black;
+            this.btnGrailOnly.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGrailOnly.ForeColor = System.Drawing.Color.Yellow;
+            this.btnGrailOnly.Location = new System.Drawing.Point(93, 12);
+            this.btnGrailOnly.Name = "btnGrailOnly";
+            this.btnGrailOnly.Size = new System.Drawing.Size(75, 40);
+            this.btnGrailOnly.TabIndex = 37;
+            this.btnGrailOnly.Text = "Add to Grail";
+            this.btnGrailOnly.UseVisualStyleBackColor = false;
+            this.btnGrailOnly.Click += new System.EventHandler(this.btnGrailOnly_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.Black;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.Yellow;
+            this.button2.Location = new System.Drawing.Point(161, 606);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(90, 23);
+            this.button2.TabIndex = 38;
+            this.button2.Text = "Delete Profile";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(263, 558);
+            this.ClientSize = new System.Drawing.Size(592, 631);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnGrailOnly);
+            this.Controls.Add(this.cbxItemCatagory);
+            this.Controls.Add(this.chkNotFound);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.chkFound);
+            this.Controls.Add(this.txtGrailSearch);
+            this.Controls.Add(this.lstGrail);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnItems);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cbxProfile);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblHeight);
             this.Controls.Add(this.btn_WidthUp);
             this.Controls.Add(this.btn_HeightUp);
@@ -339,7 +522,7 @@ namespace JakmRunCounter
             this.Controls.Add(this.btn_NewRun);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Jakm D2 Run Counter";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -371,6 +554,20 @@ namespace JakmRunCounter
         private System.Windows.Forms.Button btn_WidthUp;
         private System.Windows.Forms.Button btn_HeightUp;
         private System.Windows.Forms.Label lblHeight;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbxProfile;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnItems;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListBox lstGrail;
+        private System.Windows.Forms.TextBox txtGrailSearch;
+        private System.Windows.Forms.CheckBox chkFound;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chkNotFound;
+        private System.Windows.Forms.ComboBox cbxItemCatagory;
+        private System.Windows.Forms.Button btnGrailOnly;
+        private System.Windows.Forms.Button button2;
     }
 }
 

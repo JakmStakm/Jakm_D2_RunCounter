@@ -10,20 +10,30 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Runtime.InteropServices;
+using Microsoft.VisualBasic;
+using System.Threading;
 
 namespace JakmRunCounter
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
+
+        public int changeProfileCounter = 0;
+        public Boolean itemsActivated = false;
+        public Boolean pauseClock = false;
+        public Boolean midRun = false;
 
         public Form OverlayMFForm = new Form();
         public Button newRunButton2 = new Button();
         public Button StopButton2 = new Button();
         public Button FoundItemButton2 = new Button();
+        public Button GrailCheckButton2 = new Button();
         public Form ConfirmImportForm = new Form();
         public Button btn_confirm = new Button();
         public Button btn_deny = new Button();
         public Label discardLabel = new Label();
+
+        public List<d2ItemModel> grailSearchList;
 
 
         public void DiscardPrompt()
@@ -91,10 +101,11 @@ namespace JakmRunCounter
             OverlayMFForm.TopMost = false;
             OverlayMFForm.Visible = false;
             OverlayMFForm.Height = 40;
-            OverlayMFForm.Width = 300;
-            newRunButton2.SetBounds(0, 0, 100, 20);
-            StopButton2.SetBounds(100, 0, 100, 20);
-            FoundItemButton2.SetBounds(200, 0, 100, 20);
+            OverlayMFForm.Width = 400;
+            newRunButton2.SetBounds(0, 0, 100, 40);
+            StopButton2.SetBounds(100, 0, 100, 40);
+            FoundItemButton2.SetBounds(200, 0, 100, 40);
+            GrailCheckButton2.SetBounds(300, 0, 100, 40);
         }
 
         public void NewRun()
@@ -134,8 +145,8 @@ namespace JakmRunCounter
 
         public void FoundItem()
         {
-            if (Stopwatch.Enabled == true)
-            {
+            //if (Stopwatch.Enabled == true)
+            //{
 
                 runNumber++;
                 lbl_RunNumber.Text = runNumber.ToString();
@@ -153,15 +164,20 @@ namespace JakmRunCounter
                     lbl_BestTime.Text = lbl_RunTime.Text;
                 }
 
-                string itemName = "Item";
-                DialogResult inputItemName = InputBox("Item Name", "Item Name:", ref itemName);
-                String itemNameString = itemName;
-                lst_ItemFound.Items.Add(itemNameString);
+                //string itemName = "Item";
+                //DialogResult inputItemName = InputBox("Item Name", "Item Name:", ref itemName);
+                //String itemNameString = itemName;
+                //lst_ItemFound.Items.Add(itemNameString);
                 btn_Found_Item.Enabled = false;
                 btn_Stop.Enabled = false;
                 StopButton2.Enabled = false;
                 FoundItemButton2.Enabled = false;
-            }
+            //}
+        }
+
+        public void recordFoundItem()
+        {
+            lst_ItemFound.Items.Add(GlobalFoundItem.foundItem);
         }
 
         public void StopRun()
@@ -197,7 +213,7 @@ namespace JakmRunCounter
         public int BestTime;
         public int overlayOn;
         public int DiscardConfirmInt = 0;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             overlayOn = 0;
@@ -205,22 +221,27 @@ namespace JakmRunCounter
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Width = 279;
             runNumber = 0;
-            OverlayMFForm.Width = 300;
+            OverlayMFForm.Width = 400;
             OverlayMFForm.FormBorderStyle = FormBorderStyle.None;
             newRunButton2.Text = "New Run";
             StopButton2.Text = "Stop";
             FoundItemButton2.Text = "Found Item";
+            GrailCheckButton2.Text = "Add To Grail";
             newRunButton2.SetBounds(0, 0, 100, 40);
             StopButton2.SetBounds(100, 0, 100, 40);
             FoundItemButton2.SetBounds(200, 0, 100, 40);
-            OverlayMFForm.Controls.AddRange(new Control[] { newRunButton2, StopButton2, FoundItemButton2 });
+            GrailCheckButton2.SetBounds(300, 0, 100, 40);
+            OverlayMFForm.Controls.AddRange(new Control[] { newRunButton2, StopButton2, FoundItemButton2, GrailCheckButton2 });
             newRunButton2.Click += new EventHandler(this.newRunButton2_Click);
             newRunButton2.MouseDown += new MouseEventHandler(this.newRunButton2_MouseDown);
             FoundItemButton2.Click += new EventHandler(this.FoundItemButton2_Click);
             FoundItemButton2.MouseDown += new MouseEventHandler(this.FoundItemButton2_MouseDown);
             StopButton2.Click += new EventHandler(this.StopButton2_Click);
             StopButton2.MouseDown += new MouseEventHandler(this.StopButton2_MouseDown);
+            GrailCheckButton2.Click += new EventHandler(this.GrailCheckButton2_Click);
+            GrailCheckButton2.MouseDown += new MouseEventHandler(this.GrailCheckButton2_MouseDown);
             newRunButton2.ForeColor = Color.Yellow;
             newRunButton2.BackColor = Color.Black;
             newRunButton2.Font = new Font(newRunButton2.Font, FontStyle.Bold);
@@ -232,6 +253,9 @@ namespace JakmRunCounter
             FoundItemButton2.BackColor = Color.Black;
             FoundItemButton2.Font = new Font(FoundItemButton2.Font, FontStyle.Bold);
             FoundItemButton2.Enabled = false;
+            GrailCheckButton2.ForeColor = Color.Yellow;
+            GrailCheckButton2.BackColor = Color.Black;
+            GrailCheckButton2.Font = new Font(FoundItemButton2.Font, FontStyle.Bold);
 
 
             ConfirmImportForm.Width = 340;
@@ -253,11 +277,54 @@ namespace JakmRunCounter
             ConfirmImportForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             ConfirmImportForm.MaximizeBox = false;
             ConfirmImportForm.MinimizeBox = false;
+
+            cbxItemCatagory.Items.Add("Unique");
+            cbxItemCatagory.Items.Add("Set Items");
+            cbxItemCatagory.Items.Add("Runewords");
+            cbxItemCatagory.Items.Add("Runes");
+            cbxItemCatagory.Items.Add("ALL");
+
+            if (System.IO.File.Exists(@".\lastUsedProfile.txt"))
+            {
+                string profileName = File.ReadAllText(@".\lastUsedProfile.txt", Encoding.UTF8);
+                UsedProfile.usedProfile = profileName;
+            }
+            else
+            {
+                createNewProfile();
+            }
+
+            updateProfileName();
+            SQLiteDataAccess.createInitialSettings();
+
         }
 
         private void OverlayMFForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void updateProfileName()
+        {
+            cbxProfile.DataSource = SQLiteDataAccess.getProfiles();
+            cbxProfile.DisplayMember = "profileName";
+            cbxProfile.SelectedIndex = cbxProfile.FindStringExact(UsedProfile.usedProfile);
+        }
+
+        public void createNewProfile()
+        {
+            string newProfileName = "";
+            do
+            {
+                newProfileName = Interaction.InputBox("Enter a Profile Name to save your Holy Grail", "New Profile", "Profile Name", 60, 60);
+                UsedProfile.usedProfile = newProfileName;
+            } while (newProfileName == "");
+            SQLiteDataAccess.createInitialSettings();
+            SQLiteDataAccess.CreateNewProfile($"{UsedProfile.usedProfile}");
+            File.WriteAllText(@".\lastUsedProfile.txt", UsedProfile.usedProfile);
+            //Thread.Sleep(2000);
+            SQLiteDataAccess.saveProfile(UsedProfile.usedProfile);
+            updateProfileName();
         }
 
         private void Stopwatch_Tick(object sender, EventArgs e)
@@ -290,7 +357,7 @@ namespace JakmRunCounter
 
         private void btn_Found_Item_Click(object sender, EventArgs e)
         {
-            FoundItem();
+            foundItemForm();
         }
 
         private void btn_confirm_Click(object sender, EventArgs e)
@@ -406,6 +473,28 @@ namespace JakmRunCounter
             }
         }
 
+        public void GrailCheckButton2_Click(object sender, EventArgs e)
+        {
+            GlobalFoundItem.isGrailOnly = true;
+            FoundIItemForm newFoundItemForm = new FoundIItemForm(this);
+            newFoundItemForm.Show();
+        }
+
+        public void GrailCheckButton2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (chk_MoveOverlay.Checked == true)
+            {
+                newRunButton2.Capture = false;
+
+                const int WM_NCLBUTTONDOWN = 0x00A1;
+                const int HTCAPTION = 2;
+                Message msg =
+                    Message.Create(OverlayMFForm.Handle, WM_NCLBUTTONDOWN,
+                        new IntPtr(HTCAPTION), IntPtr.Zero);
+                this.DefWndProc(ref msg);
+            }
+        }
+
         public void newRunButton2_Click(object sender, EventArgs e)
         {
             NewRun();
@@ -463,7 +552,7 @@ namespace JakmRunCounter
 
         public void FoundItemButton2_Click(object sender, EventArgs e)
         {
-            FoundItem();
+            foundItemForm();
         }
 
         private void lst_RunNumber_SelectedIndexChanged(object sender, EventArgs e)
@@ -496,23 +585,29 @@ namespace JakmRunCounter
         {
             if (OverlayMFForm.Width >= 330)
             {
-                OverlayMFForm.Width -= 30;
-                newRunButton2.Width -= 10;
-                StopButton2.Left -= 10;
-                StopButton2.Width -= 10;
-                FoundItemButton2.Left -= 20;
-                FoundItemButton2.Width -= 10;
+                OverlayMFForm.Width -= 20;
+                newRunButton2.Width -= 5;
+                StopButton2.Left -= 5;
+                StopButton2.Width -= 5;
+                FoundItemButton2.Left -= 10;
+                FoundItemButton2.Width -= 5;
+                GrailCheckButton2.Left -= 15;
+                GrailCheckButton2.Width -= 5;
+
             }
         }
 
         private void btn_WidthUp_Click(object sender, EventArgs e)
         {
-            OverlayMFForm.Width += 30;
-            newRunButton2.Width += 10;
-            StopButton2.Left += 10;
-            StopButton2.Width += 10;
-            FoundItemButton2.Left += 20;
-            FoundItemButton2.Width += 10;
+            OverlayMFForm.Width += 20;
+            newRunButton2.Width += 5;
+            StopButton2.Left += 5;
+            StopButton2.Width += 5;
+            FoundItemButton2.Left += 10;
+            FoundItemButton2.Width += 5;
+            GrailCheckButton2.Left += 15;
+            GrailCheckButton2.Width += 5;
+
 
         }
 
@@ -524,6 +619,7 @@ namespace JakmRunCounter
                 newRunButton2.Height -= 20;
                 StopButton2.Height -= 20;
                 FoundItemButton2.Height -= 20;
+                GrailCheckButton2.Height -= 20;
             }
         }
 
@@ -533,6 +629,7 @@ namespace JakmRunCounter
             newRunButton2.Height += 20;
             StopButton2.Height += 20;
             FoundItemButton2.Height += 20;
+            GrailCheckButton2.Height += 20;
         }
 
         private void chk_MoveOverlay_CheckedChanged(object sender, EventArgs e)
@@ -545,6 +642,144 @@ namespace JakmRunCounter
             {
                 newRunButton2.Text = "New Run: " + (runNumber).ToString();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            createNewProfile();
+        }
+
+        private void cbxProfile_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            UsedProfile.usedProfile = cbxProfile.Text;
+            File.WriteAllText(@".\lastUsedProfile.txt", UsedProfile.usedProfile);
+            try
+            {
+                lstGrail.DataSource = SQLiteDataAccess.LoadItems(UsedProfile.usedProfile);
+                lstGrail.DisplayMember = "name";
+            }
+            catch
+            {
+
+            }
+
+
+        }
+
+
+        private void btnItems_Click(object sender, EventArgs e)
+        {
+            if(itemsActivated == false)
+            {
+                this.Width = 609;
+                itemsActivated = true;
+                btnItems.Text = "Items <-";
+            }
+            else
+            {
+                this.Width = 279;
+                itemsActivated = false;
+                btnItems.Text = "Items ->";
+            }
+        }
+
+
+        public void foundItemForm()
+        {
+            if (Stopwatch.Enabled == true)
+            {
+                Stopwatch.Enabled = false;
+                midRun = true;
+            }
+            FoundIItemForm newFoundItemForm = new FoundIItemForm(this);
+            newFoundItemForm.Show();
+        }
+
+        public void cancelFromFoundItemForm()
+        {
+            if (Stopwatch.Enabled == false && midRun == true)
+            {
+                Stopwatch.Enabled = true;
+            }
+        }
+
+        private void txtGrailSearch_TextChanged(object sender, EventArgs e)
+        {
+            updateSearch();
+        }
+
+        private void chkFound_CheckedChanged(object sender, EventArgs e)
+        {
+            updateSearch();
+        }
+        
+        public void updateSearch()
+        {
+            var sqlCommand = $"select * from d2Items where name like '%{txtGrailSearch.Text}%'";
+
+            if (chkFound.Checked == true)
+            {
+                sqlCommand += " and found='1'";
+            }
+
+            if (chkNotFound.Checked == true)
+            {
+                sqlCommand += " and found='0'";
+            }
+
+            if (cbxItemCatagory.Text == "Unique")
+            {
+                    sqlCommand += " and rarity='uniqueItems'";
+            }
+            else if(cbxItemCatagory.Text == "Set Items"){
+                    sqlCommand += " and rarity='setItems'";
+            }
+            else if (cbxItemCatagory.Text == "Runewords")
+            {
+                    sqlCommand += " and rarity='runewords'";
+            }
+            else if (cbxItemCatagory.Text == "Runes")
+            {
+                    sqlCommand += " and rarity='runes'";
+            }
+
+            //grailSearchList = SQLiteDataAccess.searchItemNames(UsedProfile.usedProfile, txtGrailSearch.Text);
+            lstGrail.DataSource = SQLiteDataAccess.searchItemNames(UsedProfile.usedProfile, sqlCommand);
+            lstGrail.DisplayMember = "name";
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxItemCatagory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            updateSearch();
+        }
+
+        private void btnGrailOnly_Click(object sender, EventArgs e)
+        {
+            GlobalFoundItem.isGrailOnly = true;
+            FoundIItemForm newFoundItemForm = new FoundIItemForm(this);
+            newFoundItemForm.Show();
+        }
+
+        private void chkNotFound_CheckedChanged(object sender, EventArgs e)
+        {
+            updateSearch();
+        }
+
+        private static string getDate()
+        {
+            return DateTime.Today.ToString("MM/dd");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            RemoveProfile removeProfileForm = new RemoveProfile(this);
+            removeProfileForm.Show();
         }
     }
 }
