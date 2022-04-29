@@ -6,7 +6,7 @@ Simple Diablo 2 run counter to keep track of drops and your Holy Grail of found 
 
 # Installation
 
-Go to the releases section to find the latest .ZIP file. Download and unzip the file to run the setup.exe.
+Go to the releases section to find the latest .ZIP file (https://github.com/JakmStakm/Jakm_D2_RunCounter/releases). Download and unzip/extract the file to run the setup.exe.
 
 # Drag/Drop Overlay
 
