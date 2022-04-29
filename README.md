@@ -6,7 +6,7 @@ Simple Diablo 2 run counter to keep track of drops and your Holy Grail of found 
 
 # Installation
 
-Go to the releases section to find the latest .ZIP file. Download an unzip the file to run the setup.exe.
+Go to the releases section to find the latest .ZIP file. Download and unzip the file to run the setup.exe.
 
 # Drag/Drop Overlay
 
@@ -26,7 +26,7 @@ By checking "Grail Only", it only attempts to add the item to your grail, but do
 
 # Save/Load
 
-You can save the current run session statistics to your local computer as a CSV file, which can then be imported any time to resume the session
+You can save the current run session statistics to your local computer as a CSV file, which can then be imported any time to resume the session (Holy Grail saves automatically when anything changes to the local profile's database)
 
 # Holy Grail
 
