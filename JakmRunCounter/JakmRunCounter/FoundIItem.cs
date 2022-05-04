@@ -28,6 +28,7 @@ namespace JakmRunCounter
                 chbGrailOnly.Visible = false;
                 txtComments.Visible = false;
                 label1.Visible = false;
+                chbGrailOnly.Checked = true;
             }
         }
 
@@ -53,13 +54,14 @@ namespace JakmRunCounter
                 }
                 if (chbGrailOnly.Checked == false && GlobalFoundItem.isGrailOnly == false)
                 {
-                    _mainform.recordFoundItem();
+                    _mainform.recordFoundItem(txtComments.Text);
                     _mainform.FoundItem();
                     GlobalFoundItem.foundItem = cbxItem.Text + " " + txtComments.Text;
                 }
                 else if(chbGrailOnly.Checked == true || GlobalFoundItem.isGrailOnly == true)
                 {
-                    _mainform.cancelFromFoundItemForm();
+                    //_mainform.cancelFromFoundItemForm();
+                    //System.Windows.Forms.MessageBox.Show(cbxItem.Text + " NOT A RUN");
                 }
                 GlobalFoundItem.isGrailOnly = false;
                 this.Close();

@@ -175,15 +175,23 @@ namespace JakmRunCounter
             //}
         }
 
-        public void recordFoundItem()
+        public void recordFoundItem(String ItemCaption)
         {
-            lst_ItemFound.Items.Add(GlobalFoundItem.foundItem);
+            if (ItemCaption == "")
+            {
+                lst_ItemFound.Items.Add(GlobalFoundItem.foundItem);
+            }
+            else
+            {
+                lst_ItemFound.Items.Add(GlobalFoundItem.foundItem + " (" + ItemCaption + ')');
+            }
         }
 
         public void StopRun()
         {
             if (Stopwatch.Enabled == true)
             {
+                midRun = false;
                 runNumber++;
                 lbl_RunNumber.Text = runNumber.ToString();
                 Stopwatch.Enabled = false;
@@ -484,7 +492,7 @@ namespace JakmRunCounter
         {
             if (chk_MoveOverlay.Checked == true)
             {
-                newRunButton2.Capture = false;
+                GrailCheckButton2.Capture = false;
 
                 const int WM_NCLBUTTONDOWN = 0x00A1;
                 const int HTCAPTION = 2;

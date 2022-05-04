@@ -121,6 +121,7 @@ namespace JakmRunCounter
             this.chbGrailOnly.TabIndex = 16;
             this.chbGrailOnly.Text = "ONLY Holy Grail";
             this.chbGrailOnly.UseVisualStyleBackColor = true;
+            this.chbGrailOnly.Visible = false;
             // 
             // FoundIItemForm
             // 
