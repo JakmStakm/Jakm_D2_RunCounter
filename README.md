@@ -40,3 +40,11 @@ You can filter the list of all items by Found, Not Found, by Catagory (Unique, S
 # Profiles
 
 You will be prompted to create a profile when first launching the app. The profile will keep track of your Holy Grail statistics and you can create multiple (Ladder/Non-Ladder etc..)
+
+# Upgrade to newer version (Keep profile's database/items)
+
+Navigate to the install directory (C:\Users\\(username)\AppData\Local\Apps\2.0) and Copy/Paste the Database file of the Profile Names that you would like to save to a another location.
+
+![SaveDatabase](https://user-images.githubusercontent.com/79934982/166843630-b6dace19-2687-4c57-aa7f-1036dc735c63.JPG)
+
+Uninstall the current version, and reinstall the new one and create a new Profile with the new version. Navigate to the install directory above again, and if the Profile name is the same as the old version, overwrite the database of the previous version with this version. If you have a new profile name, delete the database file with the new name, and replace it with your previous database and rename it to the new profile name. 
